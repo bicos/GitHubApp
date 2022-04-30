@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">user</string>
+    <string name="msg_input_username">유저의 id를 입력해주세요.</string>
+    <string name="hint_input_username">유저 id 입력</string>
+    <string name="btn_confirm">확인</string>
+    <string name="title_repositories">Repositories</string>
+    <string name="msg_error">에러가 발생하였습니다.</string>
+    <string name="btn_retry">재시도</string>
+    <string name="btn_clear_user_info">유저 정보 클리어</string>
+</resources>
