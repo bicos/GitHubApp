@@ -11,13 +11,20 @@ class RepositoryPagingSource(
     private val totalCount: MutableLiveData<Long>? = null
 ) : PagingSource<Int, RepositoryAdapterItem>() {
 
+    var remainCount = 0L
+
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, RepositoryAdapterItem> {
         return try {
             val currentPage = params.key ?: 0
             val response = func.invoke(currentPage)
             totalCount?.value = response.totalCount
+            remainCount =
+                if (currentPage == 0)
+                    (response.totalCount - response.items.size).coerceAtLeast(0)
+                else
+                    (remainCount - response.items.size).coerceAtLeast(0)
             val nextPage =
-                if (response.incompleteResults || response.items.isEmpty())
+                if (response.incompleteResults || response.items.isEmpty() || remainCount == 0L)
                     null
                 else
                     currentPage + 1
