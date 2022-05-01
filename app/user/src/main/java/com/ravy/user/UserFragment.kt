@@ -9,6 +9,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import com.ravy.common_ui.adapter.RepositoryAdapter
 import com.ravy.common_ui.adapter.RepositoryAdapterViewModel
 import com.ravy.common_ui.autoCleared
@@ -41,7 +42,7 @@ class UserFragment: Fragment() {
     private fun setupUi(fragmentUserBinding: FragmentUserBinding) {
 
         viewModel.navigateUrl.observe(viewLifecycleOwner) {
-            parentViewModel.navigateUrl(it)
+            parentViewModel.navigateUrl(it.consume())
         }
 
         val adapterViewModel = RepositoryAdapterViewModel()
@@ -63,7 +64,7 @@ class UserFragment: Fragment() {
         }
 
         adapterViewModel.clickRepository.observe(viewLifecycleOwner) {
-            parentViewModel.navigateUrl(it.htmlUrl)
+            parentViewModel.navigateUrl(it.consume()?.htmlUrl)
         }
     }
 }

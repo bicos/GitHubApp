@@ -2,7 +2,9 @@ package com.ravy.user
 
 import androidx.lifecycle.*
 import androidx.paging.*
+import com.ravy.common_ui.Event
 import com.ravy.common_ui.adapter.RepositoryPagingSource
+import com.ravy.common_ui.util.filter
 import com.ravy.data.pref.AppPreference
 import com.ravy.data.repo.RepoRepository
 import com.ravy.data.repo.UserRepository
@@ -42,6 +44,7 @@ class UserViewModel @Inject constructor(
     }
 
     val items = _userId
+        .filter { !it.isNullOrBlank() }
         .switchMap { userId ->
             Pager(
                 PagingConfig(pageSize = RepositoryPagingSource.PER_PAGE)
@@ -89,11 +92,11 @@ class UserViewModel @Inject constructor(
         _userId.value = id
     }
 
-    private val _navigateUrl = MutableLiveData<String?>()
-    val navigateUrl: LiveData<String?> = _navigateUrl
+    private val _navigateUrl = MutableLiveData<Event<String?>>()
+    val navigateUrl: LiveData<Event<String?>> = _navigateUrl
 
     fun clickUserInfo(user: User?) {
-        _navigateUrl.value = user?.htmlUrl
+        _navigateUrl.value = Event(user?.htmlUrl)
     }
 
     fun clickRetryBtn() {

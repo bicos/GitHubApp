@@ -1,14 +1,10 @@
 package com.ravy.search
 
-import android.net.Uri
-import android.util.Log
 import androidx.annotation.VisibleForTesting
-import androidx.core.net.toUri
 import androidx.lifecycle.*
 import androidx.paging.*
-import com.ravy.data.api.GitApiService
-import com.ravy.data.repo.RepoRepository
 import com.ravy.common_ui.adapter.RepositoryPagingSource
+import com.ravy.data.repo.RepoRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import java.text.NumberFormat
 import javax.inject.Inject

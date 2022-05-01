@@ -61,11 +61,11 @@ class SearchFragment : Fragment() {
         }
 
         adapterViewModel.clickRepository.observe(viewLifecycleOwner) {
-            parentViewModel.navigateUrl(it.htmlUrl)
+            parentViewModel.navigateUrl(it.consume()?.htmlUrl)
         }
 
         adapterViewModel.clickOwner.observe(viewLifecycleOwner) {
-            parentViewModel.navigateUrl(it.htmlUrl)
+            parentViewModel.navigateUrl(it.consume()?.htmlUrl)
         }
 
         viewLifecycleOwner.lifecycleScope.launch {
