@@ -29,6 +29,8 @@ class UserViewModel @Inject constructor(
         !it.isNullOrEmpty()
     }
 
+    val isShowError = MutableLiveData(false)
+
     val userInfo: LiveData<User?> = _userId.switchMap {
         return@switchMap if (it.isNullOrEmpty()) {
             MutableLiveData(null)
@@ -69,8 +71,6 @@ class UserViewModel @Inject constructor(
     val desc = userInfo.map {
         "followers ${it?.followers ?: 0} · following ${it?.following ?: 0}"
     }
-
-    val isShowError = MutableLiveData(false)
 
     private val _loadStates = MutableLiveData<CombinedLoadStates>()
     val isShowRepoError = _loadStates.map {
@@ -113,6 +113,7 @@ class UserViewModel @Inject constructor(
     fun clickClearUserInfo() {
         pref.userId = ""
         _userId.value = ""
+        isShowError.value = false
     }
 
     fun changeLoadStates(loadStates: CombinedLoadStates) {
